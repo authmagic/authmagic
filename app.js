@@ -1,7 +1,10 @@
-const Koa = require('koa');
+const app = new (require('koa'))();
 const router = require('koa-router')();
-const app = new Koa();
+const NodeCache = require('node-cache');
+const tokensCache = new NodeCache();
+const truthCache = new NodeCache();
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
 app.use(require('koa-static')('./static'));
 app.use(require('koa-bodyparser')());
@@ -12,6 +15,24 @@ router.post('/key', createKey)
 app.use(router.routes());
 
 const d = 5 * 60;
+const key = 'aDXvWQZeq2tcBuCv';
+
+function encrypt(text){
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
+  const encrypted = cipher.update(text);
+  const finalBuffer = Buffer.concat([encrypted, cipher.final()]);
+  return iv.toString('hex') + ':' + finalBuffer.toString('hex');
+}
+ 
+function decrypt(text){
+  const encryptedArray = encryptedHex.split(':');
+  const iv = new Buffer(encryptedArray[0], 'hex');
+  const encrypted = new Buffer(encryptedArray[1], 'hex');
+  const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
+  const decrypted = decipher.update(encrypted);
+  return Buffer.concat([decrypted, decipher.final()]).toString();
+}
 
 async function createKey(ctx) {
 	const {user, params} = ctx.request.body;
@@ -32,7 +53,10 @@ async function createKey(ctx) {
 		throw Error('undefined timestamp');
 	}
 
-	ctx.body = JSON.stringify({z});
+	const token = jwt.sign({user, params}, key);
+	const zp = encrypt(z);
+	tokensCache.set(z, token, d);
+	ctx.body = JSON.stringify({zp});
 }
 
 async function verifyAndGetToken(ctx) {

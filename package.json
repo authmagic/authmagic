@@ -4,12 +4,14 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
+    "jsonwebtoken": "^8.2.1",
     "koa": "^2.5.0",
     "koa-body": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.4.0",
     "koa-static": "^4.0.2",
-    "koa-views": "^6.1.4"
+    "koa-views": "^6.1.4",
+    "node-cache": "^4.2.0"
   },
   "devDependencies": {},
   "scripts": {

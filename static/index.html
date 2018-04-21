@@ -15,6 +15,14 @@
 		    headers: {
 		      'content-type': 'application/json'
 		    },
+		}).then(function(res) {
+			return res.json();
+		}).then(function({zp}) {
+			setInterval(async function() {
+				const res = await fetch('/token/'+zp);
+				const data = await res.json();
+				console.log(data);
+			}, 1000);
 		});
 		emailElement.style.display = 'none';
 		document.getElementById('wait').style.display = 'block';
