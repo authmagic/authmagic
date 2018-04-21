@@ -1,0 +1,26 @@
+# Node
+node_modules
+npm-debug.log
+
+# IDE
+.idea
+
+# Env files for Docker Compose
+.env
+
+# Configs
+config/private.js
+
+# Documentation
+documentation/swagger.json
+
+# Notification pem file
+/data/push.goalstep.pem
+
+/upload_*
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+.ebextensions/env.config
