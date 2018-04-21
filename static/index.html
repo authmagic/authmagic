@@ -1,5 +1,24 @@
 <html>
 <body>
-	<div>Hello world</div>
+<input type="email" id="email" placeholder="enter email" />
+<button id="go">Go</button>
+<div id="wait" style="display: none">Open the link in the email</div>
+<script>
+	document.getElementById('go').onclick = function() {
+		const emailElement = document.getElementById('email');
+		const email = emailElement.value;
+		const data = {user: email, params: {r: Math.random()}};
+		fetch('/key', {
+			body: JSON.stringify(data),
+			mode: 'cors',
+			method: 'post',
+		    headers: {
+		      'content-type': 'application/json'
+		    },
+		});
+		emailElement.style.display = 'none';
+		document.getElementById('wait').style.display = 'block';
+	};
+</script>
 </body>
 </html>
