@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 
 app.use(require('koa-static')('./static'));
 app.use(require('koa-bodyparser')());
+app.use(require('koa-respond')());
 router.post('/key', createKey)
   .get('/key/verify/:z', verifyAndGetToken)
   .get('/token/:zp', getToken)
@@ -16,6 +17,7 @@ app.use(router.routes());
 
 const d = 5 * 60;
 const key = 'aDXvWQZeq2tcBuCv';
+const expiresIn = 20 * 60;
 
 function encrypt(text){
   const iv = crypto.randomBytes(16);
@@ -26,7 +28,7 @@ function encrypt(text){
 }
  
 function decrypt(text){
-  const encryptedArray = encryptedHex.split(':');
+  const encryptedArray = text.split(':');
   const iv = new Buffer(encryptedArray[0], 'hex');
   const encrypted = new Buffer(encryptedArray[1], 'hex');
   const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
@@ -53,30 +55,51 @@ async function createKey(ctx) {
 		throw Error('undefined timestamp');
 	}
 
-	const token = jwt.sign({user, params}, key);
+	const token = jwt.sign({u: user, p: params}, key, {expiresIn});
 	const zp = encrypt(z);
 	tokensCache.set(z, token, d);
-	ctx.body = JSON.stringify({zp});
+	console.log({zp, z});
+	ctx.ok({zp});
 }
 
 async function verifyAndGetToken(ctx) {
+	console.log('verifyAndGetToken');
 	const z = ctx.params.z;
-	console.log(z);
-	const token = "89yruihfodjphuebjdwfsiougyewdsaihoudpfiybuedsahocjkbd ";
-	ctx.body = JSON.stringify({token});
+	// TODO check how library works, get operation might be blocking
+	const token = tokensCache.get(z);
+	if(token) {
+		ctx.ok({token});
+		truthCache.set(z, true, d);
+		console.log({z});
+	} else {
+		ctx.send(403);
+	}
 }
 
 async function getToken(ctx) {
 	const zp = ctx.params.zp;
-	console.log(zp);
-	const token = "89yruihfodjphuebjdwfsiougyewdsaihoudpfiybuedsahocjkbd ";
-	ctx.body = JSON.stringify({token});
+	const z = decrypt(zp);
+	if(truthCache.get(z)) {
+		const token = tokensCache.get(z);
+		ctx.ok({token});
+		truthCache.del(z);
+		tokensCache.del(z);
+	} else {
+		ctx.forbidden();
+	}
 }
 
 async function getTokenStatus(ctx) {
 	const token = ctx.params.token;
-	console.log(token);
-	ctx.status = 403;
+	jwt.verify(token, key, function(err, decoded) {
+	  if (err) {
+	  	ctx.forbidden();
+	  } else {
+	  	ctx.ok();
+	  }
+
+	  ctx.next();
+	});
 }
 
 app.listen(3000);

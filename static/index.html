@@ -18,10 +18,15 @@
 		}).then(function(res) {
 			return res.json();
 		}).then(function({zp}) {
-			setInterval(async function() {
+			const interval = setInterval(async function() {
 				const res = await fetch('/token/'+zp);
-				const data = await res.json();
-				console.log(data);
+				if(res.status === 200) {
+					clearInterval(interval);
+					const {token} = await res.json();
+					alert(token);
+				} else {
+					console.log('forbidden');
+				}
 			}, 1000);
 		});
 		emailElement.style.display = 'none';
