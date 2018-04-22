@@ -1,5 +1,5 @@
 {
-  "name": "keyauth",
+  "name": "authmagic",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -20,13 +20,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/knyga/keyauth.git"
+    "url": "git+https://github.com/knyga/authmagic.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/knyga/keyauth/issues"
+    "url": "https://github.com/knyga/authmagic/issues"
   },
-  "homepage": "https://github.com/knyga/keyauth#readme"
+  "homepage": "https://github.com/knyga/authmagic#readme"
 }

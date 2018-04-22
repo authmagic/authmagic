@@ -1,12 +1,14 @@
 const app = new (require('koa'))();
 const router = require('koa-router')();
 const NodeCache = require('node-cache');
+const koaStatic = require('koa-static');
 const tokensCache = new NodeCache();
 const truthCache = new NodeCache();
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
-app.use(require('koa-static')('./static'));
+app.use(koaStatic('./static_custom'));
+app.use(koaStatic('./static'));
 app.use(require('koa-bodyparser')());
 app.use(require('koa-respond')());
 router.post('/key', createKey)
