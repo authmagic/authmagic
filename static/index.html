@@ -1,9 +1,38 @@
 <html>
 <body>
-<input type="email" id="email" placeholder="enter email" />
-<button id="go">Go</button>
-<div id="wait" style="display: none">Open the link in the email</div>
+<div id="guest">
+	<input type="email" id="email" placeholder="enter email" />
+	<button id="go">Go</button>
+	<div id="wait" style="display: none">Open the link in the email</div>
+</div>
+<div id="user" style="display: none">
+	<div>Welcome, user!</div>
+	<div id="info"></div>
+</div>
 <script>
+	function parseJwt(token) {
+	    var base64Url = token.split('.')[1];
+	    var base64 = base64Url.replace('-', '+').replace('_', '/');
+	    return JSON.parse(window.atob(base64));
+	};
+
+	async function validate() {
+		const token = localStorage.getItem('token');
+		const response = await fetch(`/token/status/${encodeURIComponent(token)}`);
+		if(response.status === 200) {
+			renderInfo();
+			document.getElementById('guest').style.display = 'none';
+			document.getElementById('user').style.display = 'block';
+		}
+	}
+
+	function renderInfo() {
+		const token = localStorage.getItem('token');
+		const info = parseJwt(token);
+		document.getElementById('info').innerHTML = JSON.stringify(info);
+	}
+
+	validate();
 	document.getElementById('go').onclick = function() {
 		const emailElement = document.getElementById('email');
 		const email = emailElement.value;
@@ -23,7 +52,7 @@
 				if(res.status === 200) {
 					clearInterval(interval);
 					const {token} = await res.json();
-					alert(token);
+					localStorage.setItem('token', token);
 				} else {
 					console.log('forbidden');
 				}
