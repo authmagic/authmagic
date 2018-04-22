@@ -12,7 +12,8 @@
     "koa-router": "^7.4.0",
     "koa-static": "^4.0.2",
     "koa-views": "^6.1.4",
-    "node-cache": "^4.2.0"
+    "node-cache": "^4.2.0",
+    "authmagic-email": "../authmagic-email"
   },
   "devDependencies": {},
   "scripts": {

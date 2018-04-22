@@ -20,6 +20,8 @@ app.use(router.routes());
 const d = 5 * 60;
 const key = 'aDXvWQZeq2tcBuCv';
 const expiresIn = 20 * 60;
+const pluginName = 'authmagic-email';
+const plugin = require(pluginName);
 
 function encrypt(text){
   const iv = crypto.randomBytes(16);
@@ -60,8 +62,8 @@ async function createKey(ctx) {
 	const token = jwt.sign({u: user, p: params}, key, {expiresIn});
 	const zp = encrypt(z);
 	tokensCache.set(z, token, d);
-	console.log({zp, z});
 	ctx.ok({zp});
+	plugin({user, params, z});
 }
 
 async function verifyAndGetToken(ctx) {
