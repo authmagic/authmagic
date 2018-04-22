@@ -97,8 +97,6 @@ async function getTokenStatus(ctx) {
 	  } else {
 	  	ctx.ok();
 	  }
-
-	  ctx.next();
 	});
 }
 
