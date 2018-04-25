@@ -32,7 +32,6 @@ router.post('/key', async function createKey(ctx) {
 	} else if(timestamp >= ni1 && timestamp <= mi1) {
     z = sha256(user + ni + ni1);
 	} else {
-		console.log({mi, mi1, ni, ni1, timestamp});
 		throw Error('undefined timestamp');
 	}
 
@@ -46,14 +45,12 @@ router.post('/key', async function createKey(ctx) {
 });
 
 router.get('/key/verify/:z', async function verifyAndGetToken(ctx) {
-	console.log('verifyAndGetToken');
 	const z = ctx.params.z;
 	// TODO check how library works, get operation might be blocking
 	const token = tokensCache.get(z);
 	if(token) {
 		ctx.ok({token});
 		truthCache.set(z, true, duration);
-		console.log({z});
 	} else {
 		ctx.send(403);
 	}
