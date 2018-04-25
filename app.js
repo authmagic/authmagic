@@ -3,11 +3,11 @@ const router = require('koa-router')();
 const NodeCache = require('node-cache');
 const koaStatic = require('koa-static');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
 const config = require('./consts/config');
-const {duration, key, expiresIn, pluginName} = config;
+const {duration, key, expiresIn, pluginName, port} = config;
 const plugin = require(pluginName);
 const {encrypt, decrypt} = require('./utils/aes');
+const sha256 = require('./utils/sha256');
 
 const tokensCache = new NodeCache();
 const truthCache = new NodeCache();
@@ -27,11 +27,10 @@ router.post('/key', async function createKey(ctx) {
 	const ni = duration*i - duration/2;
 	const ni1 = duration*(i+1) - duration/2;
 	let z = null;
-
 	if(timestamp >= mi && ni1 > timestamp) {
-		z = crypto.createHash('sha256').update(user + mi + mi1).digest('base64');
+		z = sha256(user + mi + mi1);
 	} else if(timestamp >= ni1 && timestamp <= mi1) {
-		z = crypto.createHash('sha256').update(user + ni + ni1).digest('base64');
+    z = sha256(user + ni + ni1);
 	} else {
 		console.log({mi, mi1, ni, ni1, timestamp});
 		throw Error('undefined timestamp');
@@ -41,6 +40,8 @@ router.post('/key', async function createKey(ctx) {
 	const zp = encrypt(z);
 	tokensCache.set(z, token, duration);
 	ctx.ok({zp});
+	// TODO queue system may me useful here
+	// TODO params may define plugins we need, in some cases - email, in another - sms
 	plugin({user, params, z, config});
 });
 
@@ -83,5 +84,5 @@ router.get('/token/status/:token', async function getTokenStatus(ctx) {
 });
 
 app.use(router.routes());
-app.listen(3000);
-console.log('listening on port 3000');
+app.listen(port);
+console.log(`AuthMagic is running on port ${port}`);
