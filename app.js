@@ -45,30 +45,32 @@ router.post('/key', async function createKey(ctx) {
 	// TODO queue system may me useful here
 	// TODO params may define plugins we need, in some cases - email, in another - sms
   sendKeyPlugin({user, params, z, config});
+  console.log({z, zp});
 });
 
-router.get('/key/verify/:z', async function verifyAndGetToken(ctx) {
-	const z = ctx.params.z;
-	// TODO check how library works, get operation might be blocking
-	const token = tokensCache.get(z);
-	if(token) {
-		ctx.ok({token});
-		truthCache.set(z, true, duration);
-	} else {
-		ctx.send(403);
-	}
-});
-
-router.get('/token/:zp', async function getToken(ctx) {
-	const zp = ctx.params.zp;
-	const z = decrypt(zp);
-	if(z && truthCache.get(z)) {
-		const token = tokensCache.get(z);
-		ctx.ok({token});
-		truthCache.del(z);
-		tokensCache.del(z);
-	} else {
-		ctx.forbidden();
+router.post('/token', async function getToken(ctx) {
+	const {z, zp} = ctx.request.body;
+	// z - key to get token
+	// zp - encrypted z, to check if z is verified
+	if(z) {
+    // TODO check how library works, get operation might be blocking
+    const token = tokensCache.get(z);
+    if(token) {
+      ctx.ok({token});
+      truthCache.set(z, true, duration);
+    } else {
+      ctx.forbidden();
+    }
+	} else if(zp) {
+    const z = decrypt(zp);
+    if(z && truthCache.get(z)) {
+      const token = tokensCache.get(z);
+      ctx.ok({token});
+      truthCache.del(z);
+      tokensCache.del(z);
+    } else {
+      ctx.forbidden();
+    }
 	}
 });
 
