@@ -1,18 +1,21 @@
+const path = require('path');
 const app = new (require('koa'))();
 const router = require('koa-router')();
 const NodeCache = require('node-cache');
 const koaStatic = require('koa-static');
 const jwt = require('jsonwebtoken');
 const config = require('./consts/config');
-const {duration, key, expiresIn, pluginName, port} = config;
-const plugin = require(pluginName);
+const {duration, key, expiresIn, sendKeyPlugin: sendKeyPluginName, port} = config;
+if(!sendKeyPluginName) {
+  console.log('sendKeyPlugin plugin is undefined');
+  process.exit(-1);
+}
+const sendKeyPlugin = require(path.resolve(`./node_modules/${sendKeyPluginName}/plugin`));
 const {encrypt, decrypt} = require('./utils/aes');
 const sha256 = require('./utils/sha256');
-
 const tokensCache = new NodeCache();
 const truthCache = new NodeCache();
 
-app.use(koaStatic('./static_custom'));
 app.use(koaStatic('./static'));
 app.use(require('koa-bodyparser')());
 app.use(require('koa-respond')());
@@ -41,7 +44,7 @@ router.post('/key', async function createKey(ctx) {
 	ctx.ok({zp});
 	// TODO queue system may me useful here
 	// TODO params may define plugins we need, in some cases - email, in another - sms
-	plugin({user, params, z, config});
+  sendKeyPlugin({user, params, z, config});
 });
 
 router.get('/key/verify/:z', async function verifyAndGetToken(ctx) {
@@ -59,7 +62,7 @@ router.get('/key/verify/:z', async function verifyAndGetToken(ctx) {
 router.get('/token/:zp', async function getToken(ctx) {
 	const zp = ctx.params.zp;
 	const z = decrypt(zp);
-	if(truthCache.get(z)) {
+	if(z && truthCache.get(z)) {
 		const token = tokensCache.get(z);
 		ctx.ok({token});
 		truthCache.del(z);

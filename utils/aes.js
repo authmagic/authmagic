@@ -10,12 +10,20 @@ function encrypt(text){
 }
  
 function decrypt(text){
+  if(!text) {
+    return null;
+  }
+
   const encryptedArray = text.split(':');
   const iv = new Buffer(encryptedArray[0], 'hex');
   const encrypted = new Buffer(encryptedArray[1], 'hex');
   const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
   const decrypted = decipher.update(encrypted);
-  return Buffer.concat([decrypted, decipher.final()]).toString();
+  try {
+    return Buffer.concat([decrypted, decipher.final()]).toString();
+  } catch(e) {
+    return null;
+  }
 }
 
 module.exports = {

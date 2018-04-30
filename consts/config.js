@@ -1,8 +1,14 @@
-module.exports = {
-	duration: process.env.DURATION || 5*60,
-	key: process.env.KEY || 'aDXvWQZeq2tcBuCv',
-	expiresIn: process.env.EXPIRES_IN || 20*60,
-	pluginName: process.env.PLUGIN_NAME || 'authmagic-email',
-	checkUrl: process.env.CHECK_URL || '/check.html?z=${z}',
-	port: process.env.PORT || 3000,
+const {resolve} = require('path');
+const authmagicParams = require(resolve('./authmagic.js'));
+const baseConfig = {
+	duration: 10*60,
+	key: 'xDXvWQZeq2tcBuCv',
+	expiresIn: 18*60,
+	port: 3000,
 };
+
+if(authmagicParams) {
+  module.exports = Object.assign({}, baseConfig, authmagicParams);
+} else {
+  module.exports = baseConfig;
+}
