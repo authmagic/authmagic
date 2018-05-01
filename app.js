@@ -3,7 +3,7 @@ const app = new (require('koa'))();
 const router = require('koa-router')();
 const koaStatic = require('koa-static');
 const config = require('./consts/config');
-const {port, core: coreName} = config;
+const {port, core: {name: coreName}} = config;
 if(!coreName) {
 	console.log('core is undefined');
 	process.exit(-1);
