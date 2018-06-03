@@ -10,6 +10,7 @@ if(!coreName) {
 }
 const core = require(path.resolve(`./node_modules/${coreName}/core`));
 app.use(koaStatic('./static'));
+app.use(koaStatic(`./static/${config.theme.name}`));
 app.use(require('koa-bodyparser')());
 app.use(require('koa-respond')());
 app.use(core(router, config));
