@@ -82,5 +82,5 @@ You can generate these files simply writing few lines in the console using <a hr
 
 Collaboration
 -----------
-Project in the alpha version, we are testing it out. If you see architectural issues, things to improve or you just have something relevant to share, drop me few words: oleksandrknyga@gmail.com
+Working is better then unfinished perfect. Project in the alpha version, we are testing it out. If you see architectural issues, things to improve or you just have something relevant to share, drop me few words: oleksandrknyga@gmail.com
 I would also be glad to help you to integrate authmagic into your projects. Pull requests are welcome as well.
