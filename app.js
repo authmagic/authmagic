@@ -15,4 +15,4 @@ app.use(require('koa-bodyparser')());
 app.use(require('koa-respond')());
 app.use(core(router, config));
 app.listen(port);
-console.log(`AuthMagic is running on port ${port}`);
+console.log(`authmagic is running on port ${port}`);

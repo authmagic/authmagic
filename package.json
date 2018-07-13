@@ -14,17 +14,17 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/knyga/authmagic.git"
+    "url": "git+https://github.com/authmagic/authmagic.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/knyga/authmagic/issues"
+    "url": "https://github.com/authmagic/authmagic/issues"
   },
-  "homepage": "https://github.com/knyga/authmagic#readme"
+  "homepage": "https://github.com/authmagic/authmagic#readme"
 }
