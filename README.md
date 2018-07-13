@@ -80,6 +80,10 @@ module.exports = {
 ```
 You can generate these files simply writing few lines in the console using <a href="https://github.com/authmagic/authmagic-cli">authmagic-cli</a>. It will download and install core, plugins, theme and help you to configure them.
 
+Getting started
+-----------
+Check <a href="https://github.com/authmagic/authmagic-getting-started-example">authmagic-getting-started-example</a>.
+
 Collaboration
 -----------
 Working is better then unfinished perfect. Project in the alpha version, we are testing it out. If you see architectural issues, things to improve or you just have something relevant to share, drop me few words: oleksandrknyga@gmail.com
