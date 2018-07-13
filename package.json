@@ -1,6 +1,6 @@
 {
   "name": "authmagic",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "app.js",
   "dependencies": {
@@ -20,8 +20,8 @@
     "type": "git",
     "url": "git+https://github.com/authmagic/authmagic.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["auth", "authentication", "authorization", "openid", "oauth2"],
+  "author": "Oleksandr Knyga <oleksandrknyga@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/authmagic/authmagic/issues"
