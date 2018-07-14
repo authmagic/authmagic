@@ -32,7 +32,7 @@ Framework connectors are used to allow your API's to communicate with authorizat
 
 What's inside?
 -----------
-We decided to built authmagic with Node.js. Node.js continues to expand the market and most of developers can read javascript. So, if you would like to debug it you will most probably do it easier that in case if it was created on java or python.
+We decided to built authmagic with Node.js. Node.js continues to expand the market and almost any developer can read javascript today. It makes authmagic more commonly understandable without a tangible tradeoff in the performance (go or elixir could be better choise here) and "code quality" (something more similar to java would be better for this metric).
 Authmagic expects that core would be created with <a href="https://github.com/koajs/koa">koa2</a> framework.
 
 Configuration file
