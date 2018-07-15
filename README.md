@@ -94,4 +94,3 @@ I would also be glad to help you to integrate authmagic into your projects. Pull
 Licence
 -----------
 authmagic [MIT licensed](./LICENSE).
-Copyright (C) 2018 Oleksandr Knyga, oleksandrknyga@gmail.com
