@@ -1,6 +1,8 @@
+<img src="https://github.com/authmagic/authmagic/blob/master/docs/images/logo.png?raw=true" width="300px"/>
+
 authmagic
 ========================
-Reusable, extendable authorization service (alpha version).
+Reusable, extendable authorization service.
 
 
 Motivation
