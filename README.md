@@ -1,6 +1,8 @@
+<img src="https://github.com/authmagic/authmagic/blob/master/docs/images/logo.png?raw=true" width="300px"/>
+
 authmagic
 ========================
-Reusable, extendable authorization service (alpha version).
+Reusable, extendable authorization service.
 
 
 Motivation
@@ -32,7 +34,7 @@ Framework connectors are used to allow your API's to communicate with authorizat
 
 What's inside?
 -----------
-We decided to built authmagic with Node.js. Node.js continues to expand the market and most of developers can read javascript. So, if you would like to debug it you will most probably do it easier that in case if it was created on java or python.
+We decided to built authmagic with Node.js. Node.js continues to expand the market and almost any developer can read javascript today. It makes authmagic more commonly understandable without a tangible tradeoff in the performance (go or elixir could be better choise here) and "code quality" (something more similar to java would be better for this metric).
 Authmagic expects that core would be created with <a href="https://github.com/koajs/koa">koa2</a> framework.
 
 Configuration file
@@ -80,7 +82,15 @@ module.exports = {
 ```
 You can generate these files simply writing few lines in the console using <a href="https://github.com/authmagic/authmagic-cli">authmagic-cli</a>. It will download and install core, plugins, theme and help you to configure them.
 
+Getting started
+-----------
+Check <a href="https://github.com/authmagic/authmagic-getting-started-example">authmagic-getting-started-example</a>.
+
 Collaboration
 -----------
-Working is better then unfinished perfect. Project in the alpha version, we are testing it out. If you see architectural issues, things to improve or you just have something relevant to share, drop me few words: oleksandrknyga@gmail.com
+Working is better then unfinished perfect. Project is in the alpha version, we are testing it out. If you see architectural issues, things to improve or you just have something relevant to share, drop me few words: oleksandrknyga@gmail.com
 I would also be glad to help you to integrate authmagic into your projects. Pull requests are welcome as well.
+
+Licence
+-----------
+authmagic is [MIT licensed](./LICENSE).
