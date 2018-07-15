@@ -93,4 +93,4 @@ I would also be glad to help you to integrate authmagic into your projects. Pull
 
 Licence
 -----------
-authmagic [MIT licensed](./LICENSE).
+authmagic is [MIT licensed](./LICENSE).
