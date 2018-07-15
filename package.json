@@ -22,7 +22,7 @@
   },
   "keywords": ["auth", "authentication", "authorization", "openid", "oauth2"],
   "author": "Oleksandr Knyga <oleksandrknyga@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/authmagic/authmagic/issues"
   },
