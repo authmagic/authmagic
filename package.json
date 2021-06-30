@@ -1,13 +1,12 @@
 {
   "name": "authmagic",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "app.js",
   "engines": {
     "node": ">=8.10.0"
   },
   "dependencies": {
-    "@koa/cors": "^2.2.2",
     "koa": "^2.5.0",
     "koa-body": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
