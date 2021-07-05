@@ -38,9 +38,8 @@ if (isRateLimiterEnabled) {
       await rateLimiter.consume(ctx.ip);
       await next();
     } catch (rejRes) {
-      const errorSpecialty = rejRes.message || JSON.stringify({ ...rejRes, ip: ctx.ip });
       ctx.status = 429;
-      ctx.body = `Too Many Requests for ${ctx.ip}. Specialty: ${errorSpecialty}`;
+      ctx.body = `Too Many Requests for ${ctx.ip}.`;
     }
   });
 }
