@@ -2,6 +2,7 @@ const path = require('path');
 const app = new (require('koa'))();
 const router = require('koa-router')();
 const koaStatic = require('koa-static');
+const cors = require('@koa/cors');
 const { RateLimiterMemory } = require('rate-limiter-flexible');
 const config = require('./consts/config');
 
@@ -14,6 +15,8 @@ const {
     rateLimiterPoints: points,
     rateLimiterDuration: duration,
   },
+  isUseCors,
+  corsOptions,
 } = config;
 
 if (!coreName) {
@@ -22,6 +25,10 @@ if (!coreName) {
 }
 
 const core = require(path.resolve(`./node_modules/${coreName}/core`));
+
+if (isUseCors) {
+  app.use(cors(corsOptions));
+}
 
 if (isRateLimiterEnabled) {
   const rateLimiter = new RateLimiterMemory({	points,	blockDuration, duration	});
@@ -32,7 +39,7 @@ if (isRateLimiterEnabled) {
       await next();
     } catch (rejRes) {
       ctx.status = 429;
-      ctx.body = 'Too Many Requests';
+      ctx.body = `Too Many Requests for ${ctx.ip}.`;
     }
   });
 }
