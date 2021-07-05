@@ -8,6 +8,7 @@ const config = require('./consts/config');
 
 const {
   port,
+  isProxy,
   core: {
     name: coreName,
     isRateLimiterEnabled,
@@ -23,6 +24,8 @@ if (!coreName) {
   console.log('core is undefined');
   process.exit(-1);
 }
+
+app.proxy = isProxy;
 
 const core = require(path.resolve(`./node_modules/${coreName}/core`));
 
